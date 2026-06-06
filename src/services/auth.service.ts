@@ -8,7 +8,6 @@ export const isUserLoggedIn = () => {
 
 export const logout = async () => {
   localStorage.removeItem(authKey);
-  sessionStorage.removeItem(authKey);
 };
 
 

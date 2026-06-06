@@ -13,7 +13,7 @@ export async function apiFetch<T>(
     let accessToken = '';
 
     if (caller === 'client' && typeof window !== 'undefined') {
-        accessToken = sessionStorage.getItem(authKey) || '';
+        accessToken = localStorage.getItem(authKey) || '';
     } else if (caller === 'server') {
         accessToken = await getCokkiesToken() || '';
     }
@@ -33,7 +33,6 @@ export async function apiFetch<T>(
     if (res.status === 401) {
         if (typeof window !== "undefined") {
             // Client side - Clear session and redirect
-            sessionStorage.removeItem(authKey);
             localStorage.removeItem(authKey);
             window.location.href = "/auth/login";
             return Promise.reject(); // stop execution
