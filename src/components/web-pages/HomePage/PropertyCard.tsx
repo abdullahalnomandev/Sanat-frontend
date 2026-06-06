@@ -325,7 +325,7 @@ export default function PropertyCard({ property }: Props) {
 
             {/* Property stats */}
             {/* Property Stats */}
-            <div className="mt-4 flex flex-wrap items-center gap-4 text-sm font-medium text-gray-600">
+            <div className="mt-4 h-12 flex flex-wrap items-center gap-4 text-sm font-medium text-gray-600">
               <div className="flex items-center gap-2">
                 <Bed className="h-4 w-4" />
                 <span>
