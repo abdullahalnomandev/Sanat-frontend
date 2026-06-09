@@ -80,7 +80,7 @@ export default function Navbar() {
                             alt="MyHome Logo"
                             width={100}
                             height={100}
-                            className="rounded-xl w-10 sm:w-12 h-auto transition-all"
+                            className="rounded-xl w-12 sm:w-14 h-auto transition-all"
                         />
                         <span className="font-black text-xl sm:text-2xl tracking-tight text-[#1a3c6e] hidden xs:block">
                             MyHome

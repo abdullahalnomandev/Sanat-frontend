@@ -4,7 +4,6 @@ import { Form, Button, Checkbox, Input, notification } from "antd";
 import { UserOutlined, MailOutlined, LockOutlined } from "@ant-design/icons";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { toast } from "sonner";
 import ChooseRoleForm from "./ChooseRoleForm";
 import { useState } from "react";
 import { apiFetch } from "@/lib/api-fech";
@@ -68,7 +67,7 @@ export default function Signup() {
           {isAgent ? "Start listing properties and managing enquiries" : "Join MyHome and find your perfect property"}
         </p>
       </div>
-
+      {contextHolder}
       <Form
         form={form}
         layout="vertical"

@@ -40,19 +40,19 @@ body {
 }
 
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
-}
+} */
 /* 
 ::-webkit-scrollbar-track {
   background: #dfdfdf00;
 } */
 
- ::-webkit-scrollbar-thumb {
+ /* ::-webkit-scrollbar-thumb {
   background: #f6f6f6;
   border-radius: 10px;
-} 
+}  */
 
 
 .inter {
