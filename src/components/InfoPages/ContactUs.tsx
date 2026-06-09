@@ -1,92 +1,171 @@
 "use client";
 
-import { Typography } from "antd";
+import React, { useState } from "react";
+import { Form, Input, Button, Card, Typography, notification, Row, Col } from "antd";
+import { MailOutlined, PhoneOutlined, EnvironmentOutlined, SendOutlined } from "@ant-design/icons";
+import { apiFetch } from "@/lib/api-fech";
 
-const { Title, Paragraph, Text } = Typography;
-
-const initialContent = `
-<p><strong>Last updated:</strong> December 30, 2025</p>
-
-<h2>1. Acceptance of Terms</h2>
-<p>
-By accessing and using Gift Moment, you accept and agree to be bound by the terms and provision of this agreement. 
-If you do not agree to abide by the above, please do not use this service.
-</p>
-
-<h2>2. Use License</h2>
-<p>
-Permission is granted to temporarily download one copy of Gift Moment for personal, non-commercial transitory viewing only. 
-This is the grant of a license, not a transfer of title.
-</p>
-
-<h2>3. Subscription & Payments</h2>
-<p>
-VIP subscriptions are billed monthly at €4.99. Premium cards and VIP videos are one-time purchases. 
-All payments are processed securely. Subscriptions auto-renew unless cancelled 24 hours before the renewal date.
-</p>
-
-<h2>4. User Accounts</h2>
-<p>
-You are responsible for maintaining the confidentiality of your account and password. 
-You agree to accept responsibility for all activities that occur under your account or password.
-</p>
-
-<h2>5. Content Guidelines</h2>
-<p>
-Users must not send cards containing offensive, abusive, or illegal content. 
-Gift Moment reserves the right to remove any content that violates these terms and suspend or terminate accounts.
-</p>
-
-<h2>6. Intellectual Property</h2>
-<p>
-All cards, designs, animations, music, and other content provided by Gift Moment are protected by copyright and intellectual property laws. 
-Users may not reproduce, distribute, or create derivative works.
-</p>
-
-<h2>7. Refund Policy</h2>
-<p>
-Refunds for digital card purchases are available within 24 hours of purchase if the card has not been sent. 
-VIP subscriptions can be cancelled anytime, but refunds are not provided for partial months.
-</p>
-
-<h2>8. Service Modifications</h2>
-<p>
-Gift Moment reserves the right to modify or discontinue the service at any time, with or without notice. 
-We shall not be liable to you or any third party for any modification or discontinuance.
-</p>
-
-<h2>9. Privacy</h2>
-<p>
-Your use of Gift Moment is also governed by our Privacy Policy. 
-Please review our Privacy Policy to understand our practices regarding your personal data.
-</p>
-
-<h2>10. Limitation of Liability</h2>
-<p>
-Gift Moment shall not be liable for any indirect, incidental, special, consequential or punitive damages 
-resulting from your use or inability to use the service.
-</p>
-
-<h2>11. Governing Law</h2>
-<p>
-These terms shall be governed by and construed in accordance with the laws of the European Union, 
-without regard to its conflict of law provisions.
-</p>
-
-<h2>12. Contact Information</h2>
-<p>
-For questions about these Terms & Conditions, please contact us at legal@myhome.com
-</p>
-`;
+const { Title, Text, Paragraph } = Typography;
+const { TextArea } = Input;
 
 export default function ContactUs() {
-    return (
-        <section className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
-            <div className="container mx-auto">
-                {/* Sections */}
-                <div className="max-w-4xl mx-auto space-y-4 text-black" dangerouslySetInnerHTML={{ __html: initialContent || "No content yet." }} />
+  const [form] = Form.useForm();
+  const [loading, setLoading] = useState(false);
+  const [notificationApi, contextHolder] = notification.useNotification();
 
+  const onFinish = async (values: any) => {
+    setLoading(true);
+    try {
+      await apiFetch("/contacts", {
+        method: "POST",
+        body: JSON.stringify(values),
+      }, "client");
+
+      notificationApi.success({
+        message: "Message Sent Successfully",
+        description: "Thank you for contacting us. We will get back to you shortly.",
+        placement: "topRight",
+      });
+      form.resetFields();
+    } catch (error: any) {
+      notificationApi.error({
+        message: "Failed to Send Message",
+        description: error.message || "Something went wrong. Please try again later.",
+        placement: "topRight",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <section className="min-h-screen bg-gray-50 py-16 px-4 sm:px-6 lg:px-8">
+      {contextHolder}
+      <div className="container mx-auto max-w-6xl">
+        <div className="text-center mb-16">
+          <Title level={1} className="!text-[#1a3c6e] !mb-4">Get in Touch</Title>
+          <Paragraph className="text-gray-500 text-lg max-w-2xl mx-auto">
+            Have questions about a property or our services? Our team is here to help you find your perfect home.
+          </Paragraph>
+        </div>
+
+        <Row gutter={[32, 32]}>
+          {/* Contact Information */}
+          <Col xs={24} lg={10}>
+            <div className="!space-y-8">
+              <Card className="rounded-2xl border-none shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="bg-blue-50 p-3 rounded-xl text-[#1a3c6e]">
+                    <MailOutlined className="text-xl" />
+                  </div>
+                  <div>
+                    <Title level={5} className="!mb-1">Email Us</Title>
+                    <Text className="text-gray-500">support@myhome.com</Text>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="rounded-2xl border-none shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="bg-green-50 p-3 rounded-xl text-green-600">
+                    <PhoneOutlined className="text-xl" />
+                  </div>
+                  <div>
+                    <Title level={5} className="!mb-1">Call Us</Title>
+                    <Text className="text-gray-500">+44 (0)  XXX XXX XXX</Text>
+                  </div>
+                </div>
+              </Card>
+
+              <Card className="rounded-2xl border-none shadow-sm hover:shadow-md transition-shadow">
+                <div className="flex items-start gap-4">
+                  <div className="bg-orange-50 p-3 rounded-xl text-orange-600">
+                    <EnvironmentOutlined className="text-xl" />
+                  </div>
+                  <div>
+                    <Title level={5} className="!mb-1">Our Office</Title>
+                    <Text className="text-gray-500 text-sm leading-relaxed">
+                      {/* 221B Baker Street, London<br /> */}
+                      {/* NW1 6XE, United Kingdom */}
+                      United Kingdom, London
+                    </Text>
+                  </div>
+                </div>
+              </Card>
             </div>
-        </section>
-    );
+          </Col>
+
+          {/* Contact Form */}
+          <Col xs={24} lg={14}>
+            <Card className="rounded-3xl border-none shadow-xl p-2 sm:p-6">
+              <Form
+                form={form}
+                layout="vertical"
+                onFinish={onFinish}
+                requiredMark={false}
+                className="space-y-2"
+              >
+                <Row gutter={16}>
+                  <Col xs={24} sm={12}>
+                    <Form.Item
+                      name="name"
+                      label={<span className="text-sm font-semibold text-gray-700">Full Name</span>}
+                      rules={[{ required: true, message: "Please enter your name" }]}
+                    >
+                      <Input placeholder="Enter your full name" size="large" className="!rounded-xl" />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} sm={12}>
+                    <Form.Item
+                      name="email"
+                      label={<span className="text-sm font-semibold text-gray-700">Email Address</span>}
+                      rules={[
+                        { required: true, message: "Please enter your email" },
+                        { type: "email", message: "Please enter a valid email" }
+                      ]}
+                    >
+                      <Input placeholder="Enter your email" size="large" className="!rounded-xl" />
+                    </Form.Item>
+                  </Col>
+                </Row>
+
+                <Form.Item
+                  name="subject"
+                  label={<span className="text-sm font-semibold text-gray-700">Subject</span>}
+                  rules={[{ required: true, message: "Please enter a subject" }]}
+                >
+                  <Input placeholder="How can we help?" size="large" className="!rounded-xl" />
+                </Form.Item>
+
+                <Form.Item
+                  name="message"
+                  label={<span className="text-sm font-semibold text-gray-700">Your Message</span>}
+                  rules={[{ required: true, message: "Please enter your message" }]}
+                >
+                  <TextArea 
+                    placeholder="Tell us more about your inquiry..." 
+                    rows={6} 
+                    className="!rounded-xl !resize-none" 
+                  />
+                </Form.Item>
+
+                <Form.Item className="!mb-0 pt-4">
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    size="large"
+                    loading={loading}
+                    icon={<SendOutlined />}
+                    className="!bg-[#1a3c6e] !border-[#1a3c6e] !rounded-xl !h-12 !px-10 font-bold w-full sm:w-auto"
+                  >
+                    Send Message
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Col>
+        </Row>
+      </div>
+    </section>
+  );
 }
