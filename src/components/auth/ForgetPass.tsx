@@ -61,8 +61,8 @@ export default function ForgotPasswordForm() {
       {contextHolder}
       {/* Header */}
       <div className="text-center mb-8">
-        <div className="w-20 h-20 rounded-2xl  flex items-center justify-center mx-auto mb-4">
-          <Image height={100} width={100} src="/logo.png" alt="logo" className="h-auto" />
+        <div className="w-40 h-40 rounded-2xl flex items-center justify-center mx-auto">
+          <Image height={120} width={160} src="/logo.png" alt="logo" className="h-auto" />
         </div>
         <h2 className="text-2xl font-extrabold text-[#1a3c6e]">Forgot Password?</h2>
         <p className="text-gray-500 mt-2 text-sm leading-relaxed max-w-xs mx-auto">

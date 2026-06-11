@@ -80,13 +80,10 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="MyHome Logo"
-              width={100}
-              height={100}
-              className="rounded-xl w-12 sm:w-14 h-auto transition-all"
+              width={160}
+              height={120}
+              className="h-auto transition-all"
             />
-            <span className="font-black text-xl sm:text-2xl tracking-tight text-[#1a3c6e] hidden xs:block">
-              MyHome
-            </span>
           </div>
         </Link>
 
