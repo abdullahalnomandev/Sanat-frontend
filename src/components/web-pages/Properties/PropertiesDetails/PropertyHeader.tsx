@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react';
 import { apiFetch } from '@/lib/api-fech';
 import { Breadcrumb, Button } from 'antd';
-import { Heart, MapPin } from 'lucide-react';
+import { Heart, MapPin, Share2 } from 'lucide-react';
 import { isUserLoggedIn } from '@/services/auth.service';
 import { notification } from 'antd';
 import Link from 'next/link';
@@ -43,6 +43,29 @@ export const PropertyHeader = ({ data }: any) => {
     }
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: data?.title || 'Check out this property!',
+      text: `Take a look at this property: ${data?.title || ''}`,
+      url: typeof window !== 'undefined' ? window.location.href : '',
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: copy link to clipboard
+        await navigator.clipboard.writeText(shareData.url);
+        api.success({
+          message: 'Link copied to clipboard!',
+          placement: 'topRight',
+        });
+      }
+    } catch (error) {
+      console.log('Share error:', error);
+    }
+  };
+
   return (
     <div className="mb-6">
       <div className="mb-4">
@@ -69,6 +92,16 @@ export const PropertyHeader = ({ data }: any) => {
 
         <div className="flex flex-col items-start md:items-end gap-2">
           <div className="flex gap-3 mt-2 md:mt-0">
+            <Button
+              onClick={handleShare}
+              className="flex items-center justify-center gap-2 rounded-xl h-12 px-6 font-semibold text-base border border-gray-200 text-gray-700 hover:!border-[#14b8a6] hover:!text-[#14b8a6] transition-all duration-300"
+            >
+              <Share2
+                size={18}
+                className="text-gray-500 hover:scale-110 transition-all duration-300"
+              />
+              <span>Share</span>
+            </Button>
             <Button
               onClick={handleToogleSave}
               className={`flex items-center justify-center gap-2 rounded-xl h-12 px-6 font-semibold text-base border transition-all duration-300 ${isFavorite
