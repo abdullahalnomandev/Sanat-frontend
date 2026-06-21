@@ -1,13 +1,15 @@
-import AgencyProfilePage from '@/components/AgentDashboard/AgentProfile'
-import { apiFetch } from '@/lib/api-fech'
+import AgencyProfilePage from "@/components/AgentDashboard/AgentProfile";
+import { apiFetch } from "@/lib/api-fech";
 
-const page = async () => {
-  const res = await apiFetch('/users/profile', { method: 'GET' }, 'server');
+const Page = async () => {
+  const [res, feeds] = await Promise.all([
+    apiFetch("/users/profile", { method: "GET" }, "server"),
+    apiFetch("/agent-feeds", { method: "GET" }, "server"),
+  ]);
+
   const profile = (res as any)?.data || null;
 
-  return (
-    <div><AgencyProfilePage profile={profile} /></div>
-  )
-}
+  return <AgencyProfilePage profile={profile} feeds={(feeds as any)?.data || []} />;
+};
 
-export default page
+export default Page;

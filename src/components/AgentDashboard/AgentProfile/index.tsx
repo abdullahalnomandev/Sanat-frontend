@@ -10,7 +10,7 @@ import AddressForm from "@/components/UserDashboard/ProfileInfo/AddressForm";
 import { apiFetch } from "@/lib/api-fech";
 import { invalidateProfileCache } from "@/components/layout/NavActions";
 
-export default function AgencyProfilePage({ profile }: { profile: any }) {
+export default function AgencyProfilePage({ profile, feeds }: { profile: any, feeds: any }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [notificationApi, contextHolder] = notification.useNotification();
@@ -88,6 +88,24 @@ export default function AgencyProfilePage({ profile }: { profile: any }) {
         }
     };
 
+    const handleSaveFeed = async (feedUrl: string) => {
+        try {
+            await apiFetch("/agent-feeds", { method: "POST", body: JSON.stringify({ feedUrl: feedUrl || "" }) }, "server");
+            // notificationApi.success({
+            //     message: "Feed saved successfully",
+            //     placement: "topRight",
+            // });
+        } catch (err) {
+            console.error("AgencyProfilePage error:", err);
+            notificationApi.error({
+                message: (err as any)?.message || "Unexpected error occurred",
+                placement: "topRight",
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
+
     const tabItems = [
         {
             key: "personal",
@@ -152,6 +170,16 @@ export default function AgencyProfilePage({ profile }: { profile: any }) {
                                 onChange={(e) => handleChange("agencyName", e.target.value)}
                                 className="w-full h-12 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a3c6e]/20 transition-all"
                                 placeholder="Enter agency name"
+                            />
+                        </div>
+                        <div className="max-w-xl">
+                            <label className="block text-[14px] font-semibold text-slate-700 mb-2">XML Feed Link</label>
+                            <input
+                                type="text"
+                                defaultValue={feeds.feedUrl}
+                                onBlur={(e) => handleSaveFeed(e.target.value)}
+                                className="w-full h-12 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a3c6e]/20 transition-all"
+                                placeholder="Enter your xml feed link"
                             />
                         </div>
                     </div>
