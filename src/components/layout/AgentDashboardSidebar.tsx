@@ -14,7 +14,8 @@ import {
     Bell,
     Settings,
     UserCog,
-    User
+    User,
+    FileText
 } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -47,6 +48,11 @@ export default function AgentDashboardSidebar({
         { key: "agent-dashboard/subscription", icon: <CreditCard size={18} />, label: "Subscription" },
         { key: "agent-dashboard/agent-notifications", icon: <Settings size={18} />, label: "Notification Settings" },
         { key: "agent-dashboard/agency-profile", icon: <UserCog size={18} />, label: "Profile" },
+        { 
+            key: "documentation", 
+            icon: <FileText size={18} />, 
+            label: <a href={process.env.NEXT_PUBLIC_FEED_DOCUMENTATION_URL} target="_blank" rel="noopener noreferrer">Documentation</a>
+        },
     ];
 
     // const bottomMenuItems = [
@@ -85,7 +91,9 @@ export default function AgentDashboardSidebar({
                         inlineIndent={20}
                         className="!border-none text-[14px] font-medium flex-1 overflow-y-auto overflow-x-hidden"
                         onClick={({ key }) => {
-                            router.push(`/${key}`);
+                            if (key !== "documentation") {
+                                router.push(`/${key}`);
+                            }
                         }}
                     />
                     {/* <div className="border-t border-gray-100 pt-2 pb-2">

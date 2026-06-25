@@ -32,7 +32,10 @@ export default function LoginForm() {
         "/auth/login",
         {
           method: "POST",
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            ...payload,
+            role,
+          }),
         },
         "client",
       );
@@ -85,7 +88,7 @@ export default function LoginForm() {
                     <span className="font-bold">User</span>
                   </div>
                 ),
-                value: "user",
+                value: "USER",
               },
               {
                 label: (
@@ -96,7 +99,7 @@ export default function LoginForm() {
                     <span className="font-bold">Agent</span>
                   </div>
                 ),
-                value: "agent",
+                value: "AGENT",
               },
             ]}
             className="role-segmented !rounded-xl"
