@@ -163,7 +163,7 @@ export default function LoginForm() {
             loading={loading}
             className="!bg-[#1a3c6e] !border-[#1a3c6e] !h-14 !rounded-xl !font-bold !text-[16px] !mt-6 shadow-lg shadow-[#1a3c6e]/20 hover:!scale-[1.01] active:!scale-95 transition-all"
           >
-            Sign In as {role === "agent" ? "Agent" : "User"}
+            Sign In as {role === "AGENT" ? "Agent" : "User"}
           </Button>
         </Form>
 

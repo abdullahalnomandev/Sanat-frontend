@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Drawer, Button, Dropdown, Grid } from "antd";
@@ -136,7 +136,9 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-1 sm:gap-4">
-          <NavActions />
+          <Suspense fallback={<div className="w-20 h-10 bg-gray-100 rounded-lg animate-pulse"></div>}>
+            <NavActions />
+          </Suspense>
           {!screens.md && (
             <Button
               type="text"
