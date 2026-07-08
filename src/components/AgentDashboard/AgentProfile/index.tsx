@@ -223,7 +223,7 @@ export default function AgencyProfilePage({
                 value={blmFeedUrl}
                 onChange={(e) => setBlmFeedUrl(e.target.value)}
                 className="w-full h-12 px-4 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-[#1a3c6e]/20 transition-all"
-                placeholder="Enter your xml feed link"
+                placeholder="Enter your BLM feed link"
               />
             </div>
           </div>
