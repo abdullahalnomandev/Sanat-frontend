@@ -1,8 +1,4 @@
 {
-<<<<<<< HEAD
-    "editor.cursorBlinking": "expand"
-}
-=======
   "search.exclude": {
     "**/.sst": true
   },
@@ -25,4 +21,3 @@
     "runOn": "folderOpen"
   }
 }
->>>>>>> 83748e70533f2298f6c9dc8d366fdcc62ca9c11b
